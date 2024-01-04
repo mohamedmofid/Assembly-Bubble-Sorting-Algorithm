@@ -16,9 +16,7 @@ MAIN PROC
     call print_str
     call display_array
 
-    mov cx, array_size  ; Outer loop counter
-    dec cx              ; Set loop iterations
-    mov bl, 1           ; Set flag initially to true (1)
+    mov cx, array_size - 1  ; Outer loop counter
 
 outer_loop:
     mov bx, 0           ; Inner loop counter
@@ -57,6 +55,7 @@ no_swap:
 
 .EXIT    
 MAIN ENDP
+
 display_array PROC NEAR
     mov cx, array_size   ; Counter for looping through array
     mov si, 0            ; init index
@@ -65,14 +64,15 @@ print_loop:
     mov dl, [array + si]   ; Load value from array
     add dl, '0'            ; Convert numeric value to ASCII character
     
-    mov ah, 02h            ; DOS function to print character
-    int 21h                ; Call DOS
+    mov ah, 02h            ; Print character
+    int 21h                
 
     call insert_seprator
     
     inc si                 ; Move to next element
     loop print_loop         ; Loop until all elements printed
 display_array ENDP
+
 print_str PROC NEAR
     MOV AH,09H
     INT 21H 
